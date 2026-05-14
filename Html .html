@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Voltix Store</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Arial', sans-serif;
+scroll-behavior:smooth;
+}
+
+body{
+background:#0f0f0f;
+color:white;
+}
+
+/* 🔥 HEADER - CENTRADO Y ALINEADO */
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:#111;
+border-bottom:2px solid #1D855B;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo img{
+width:45px;
+height:45px;
+}
+
+.logo h2{
+font-size:22px;
+font-weight:bold;
+color:white;
+letter-spacing:0.5px;
+text-shadow:0 0 8px rgba(29,133,91,0.6);
+}
+
+nav{
+display:flex;
+gap:15px;
+}
+
+nav a{
+color:white;
+background:#1b1b1b;
+padding:10px 18px;
+text-decoration:none;
+border-radius:8px;
+border:1px solid #222;
+font-size:14px;
+transition:0.3s;
+}
+
+nav a:hover{
+background:#1D855B;
+transform:scale(1.05);
+box-shadow:0 0 10px rgba(29,133,91,0.4);
+}
+
+.search-box{
+text-align:center;
+margin:20px 0;
+}
+
+.search-box input{
+width:350px;
+padding:12px 20px;
+border-radius:10px;
+border:1px solid #333;
+background:#1b1b1b;
+color:white;
+outline:none;
+transition:0.3s;
+font-size:15px;
+}
+
+.search-box input:focus{
+border-color:#1D855B;
+box-shadow:0 0 10px rgba(29,133,91,0.4);
+}
+
+/* 🚀 SECCIÓN HERO - TOTALMENTE CENTRADA Y ALINEADA COMO LA IMAGEN */
+.hero{
+background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 40%, #1D855B 100%);
+padding: 70px 60px;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 60px;
+min-height: 85vh;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+.hero-text{
+flex: 0 1 550px;
+text-align: left;
+}
+
+.hero-text h1{
+font-size: 46px;
+line-height: 1.1;
+font-weight: 800;
+margin-bottom: 20px;
+color: #ffffff;
+}
+
+.hero-text p{
+font-size: 16px;
+color: #d1d1d1;
+margin-bottom: 30px;
+line-height: 1.6;
+max-width: 450px;
+}
+
+.btn{
+background:#1D855B;
+border:none;
+padding:14px 26px;
+border-radius:8px;
+cursor:pointer;
+color:white;
+font-size:15px;
+font-weight: 600;
+transition:0.3s;
+text-decoration: none;
+display: inline-block;
+}
+
+.btn:hover{
+background:#25c07a;
+transform:translateY(-2px);
+box-shadow:0 5px 15px rgba(29,133,91,0.4);
+}
+
+.hero-image{
+flex: 0 1 500px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.hero-image img{
+width: 100%;
+height: auto;
+object-fit: contain;
+}
+
+/* 🟦 TARJETAS INFORMATIVAS - CENTRADAS, MISMA DISTRIBUCIÓN */
+.features-cards{
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 25px;
+padding: 50px 60px;
+max-width: 1200px;
+margin: 0 auto;
+background-color: #0f0f0f;
+}
+
+.feature-card{
+background-color: #1b1b1b;
+border: 1px solid #2a2a2a;
+padding: 30px 25px;
+border-radius:12px;
+transition: 0.3s;
+}
+
+.feature-card:hover{
+border-color: #1D855B;
+transform: translateY(-5px);
+box-shadow: 0 8px 20px rgba(29,133,91,0.15);
+}
+
+.icon-box{
+width: 42px;
+height: 42px;
+background-color: rgba(29, 133, 91, 0.15);
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #1D855B;
+font-weight: bold;
+font-size: 20px;
+margin-bottom: 15px;
+}
+
+.feature-card h3{
+color: #ffffff;
+margin-bottom: 8px;
+font-size: 18px;
+font-weight: 600;
+}
+
+.feature-card p{
+color: #aaaaaa;
+font-size: 14px;
+line-height: 1.5;
+}
+
+/* 🛒 PRODUCTOS - CENTRADOS Y ORDENADOS */
+#productos h2{
+text-align:center;
+font-size:30px;
+margin:40px 0 10px;
+color:#fff;
+}
+
+#noResults{
+text-align:center;
+color:#aaa;
+padding:20px;
+font-size:17px;
+display:none;
+}
+
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:25px;
+padding:30px 60px 60px;
+max-width:1400px;
+margin:0 auto;
+background-color: #0f0f0f;
+}
+
+.card{
+background:#1b1b1b;
+border-radius:18px;
+overflow:hidden;
+border:1px solid #222;
+transition:0.3s;
+cursor:pointer;
+position:relative;
+margin:0 auto;
+width:100%;
+max-width:260px;
+}
+
+.card:hover{
+transform:scale(1.05);
+border:1px solid #1D855B;
+box-shadow:0 0 20px rgba(29,133,91,0.35);
+}
+
+/* 🆕 IMÁGENES SIN FONDO Y CENTRADAS */
+.card img{
+width:100%;
+height:190px;
+object-fit:contain;
+background:transparent;
+padding:15px;
+display:block;
+margin:0 auto;
+}
+
+.info{
+padding:15px;
+text-align:center;
+}
+
+.info h3{
+font-size:15px;
+margin-bottom:5px;
+}
+
+.price{
+color:#37BC7D;
+font-weight:bold;
+font-size:16px;
+}
+
+/* DESCRIPCIÓN HOVER */
+.desc-hover{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+background:rgba(0,0,0,0.85);
+color:#ccc;
+padding:12px;
+font-size:13px;
+transform:translateY(100%);
+transition:0.3s;
+border-top:1px solid #1D855B;
+text-align:center;
+}
+
+.card:hover .desc-hover{
+transform:translateY(0);
+}
+
+/* MODAL - CENTRADO PERFECTO */
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+padding:20px;
+}
+
+.modal-content{
+background:#1b1b1b;
+padding:25px;
+border-radius:18px;
+width:100%;
+max-width:420px;
+text-align:center;
+border:1px solid #1D855B;
+}
+
+.modal-content img{
+width:100%;
+max-height:220px;
+object-fit:contain;
+background:transparent;
+padding:10px;
+margin:10px 0;
+}
+
+.close{
+background:#ff3b3b;
+margin-top:10px;
+margin-left:5px;
+margin-right:5px;
+}
+
+/* 📞 CONTACTO CENTRADO */
+#contacto{
+background:#111;
+padding:50px 60px;
+text-align:center;
+border-top:2px solid #1D855B;
+}
+
+#contacto h2{
+margin-bottom:15px;
+}
+
+#contacto p{
+color:#aaa;
+line-height:1.7;
+}
+
+/* 📱 RESPONSIVE - PARA QUE SE VEA BIEN EN CELULARES */
+@media (max-width: 900px) {
+.hero{
+flex-direction:column;
+text-align:center;
+padding:50px 30px;
+}
+.hero-text{
+text-align:center;
+}
+.features-cards{
+grid-template-columns:1fr;
+padding:30px 20px;
+}
+header{
+padding:15px 20px;
+}
+nav a{
+padding:8px 12px;
+font-size:13px;
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+<img src="voltix.png">
+<h2>Voltix Store</h2>
+</div>
+
+<nav>
+<a href="#inicio">🏠 Inicio</a>
+<a href="#productos">🛒 Productos</a>
+<a href="#contacto">📞 Contacto</a>
+</nav>
+
+</header>
+
+<div class="search-box">
+  <input type="text" id="searchInput" placeholder="🔍 Buscar cualquier producto...">
+</div>
+
+<!-- ✅ SECCIÓN INICIO - CENTRADA COMO LA IMAGEN -->
+<section class="hero" id="inicio">
+
+<div class="hero-text">
+<h1>Descubre la última tecnología</h1>
+<p>Dispositivos variados: smartphones, computadoras, cámaras, parlantes, relojes inteligentes, audífonos y mucho más. La mejor selección para ti.</p>
+
+<a href="#productos" class="btn">Ver Productos</a>
+</div>
+
+<div class="hero-image">
+<img src="https://static.vecteezy.com/system/resources/thumbnails/048/412/770/small/modern-gaming-pc-isolated-on-transparent-free-png.png" alt="Productos Tecnológicos">
+</div>
+
+</section>
+
+<!-- ✅ TARJETAS - CENTRADAS Y ALINEADAS -->
+<section class="features-cards">
+
+<div class="feature-card">
+<div class="icon-box">↗</div>
+<h3>Productos</h3>
+<p>Explora nuestra amplia gama de dispositivos y accesorios tecnológicos de última generación.</p>
+</div>
+
+<div class="feature-card">
+<div class="icon-box">★</div>
+<h3>Características</h3>
+<p>Conoce las funciones y ventajas de la tecnología más avanzada disponible en el mercado.</p>
+</div>
+
+<div class="feature-card">
+<div class="icon-box">💬</div>
+<h3>Soporte</h3>
+<p>Obtén ayuda y atención personalizada para cualquier duda o consulta sobre tus equipos.</p>
+</div>
+
+</section>
+
+<!-- PRODUCTOS -->
+<section id="productos">
+
+<h2>Catálogo de Productos (80 Artículos)</h2>
+<p id="noResults">❌ No se encontraron productos con ese nombre</p>
+
+<div class="products" id="products"></div>
+
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+
+<h2>Contacto</h2>
+
+<p>
+📩 voltixstore@gmail.com <br>
+📱 WhatsApp: +593 967546505
+</p>
+
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+
+<div class="modal-content">
+
+<h2 id="mTitle"></h2>
+<img id="mImg">
+<p id="mDesc"></p>
+<p id="mPrice"></p>
+
+<button class="btn" id="buyBtn">Comprar por WhatsApp</button>
+<button class="btn close" onclick="closeModal()">Cerrar</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* MODAL */
+function openModal(t,p,d,i){
+document.getElementById("modal").style.display="flex";
+document.getElementById("mTitle").innerText=t;
+document.getElementById("mPrice").innerText=p;
+document.getElementById("mDesc").innerText=d;
+document.getElementById("mImg").src=i;
+
+document.getElementById("buyBtn").onclick=()=>{
+window.open(`https://wa.me/+593967546505?text=Quiero%20comprar%20${t}%20${p}`);
+}
+}
+
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+
+/* ✅ BUSCADOR FUNCIONAL */
+document.getElementById("searchInput").addEventListener("input", function(){
+let filtro = this.value.toLowerCase().trim();
+let tarjetas = document.querySelectorAll(".card");
+let hayResultados = false;
+
+tarjetas.forEach(card => {
+  let texto = card.textContent.toLowerCase();
+  if(texto.includes(filtro)){
+    card.style.display = "block";
+    hayResultados = true;
+  } else {
+    card.style.display = "none";
+  }
+});
+
+document.getElementById("noResults").style.display = hayResultados ? "none" : "block";
+});
+
+/* ✅ LISTA DE PRODUCTOS - IMÁGENES SIN FONDO + VISORES VR */
+const productData = [
+["Reloj Inteligente Smart Pro","$39.99","Pantalla táctil, monitoreo de salud, resistente al agua","https://lacasadelascarcasas.com.mx/141-large_default/smartwatch-pro.jpg"],
+["Cargador Portátil 20000mAh","$24.99","Carga rápida, 2 puertos USB, ligero y duradero","https://http2.mlstatic.com/D_NQ_NP_920335-MLA99491709174_112025-O.webp"],
+["Auriculares Bluetooth HD","$42.99","Sonido envolvente, batería de larga duración, micrófono integrado","https://http2.mlstatic.com/D_NQ_NP_643248-MLA41108801281_032020-O.webp"],
+["Mouse Inalámbrico Ergonómico","$15.99","Alta precisión, silencioso, batería de larga vida","https://hp.widen.net/content/zkgspsv2hy/png/zkgspsv2hy.png?w=800&h=600&dpi=72&color=ffffff00"],
+["Teclado Mecánico RGB","$34.99","Luces personalizables, teclas anti-ghosting, resistente","https://spacegamer.com.ar/img/Public/1058-producto-teclado-mecanico-redragon-vata-pro-rgb-8723.jpg"],
+["Cámara Web Full HD 1080p","$29.99","Enfoque automático, micrófono incorporado, ángulo amplio","https://almacenalcosto.com/295-large_default/camara-web-full-hd-1080p.jpg"],
+["Parlante Bluetooth Portátil","$27.99","Sonido potente, resistente al agua, batería de 12h","https://hiraoka.com.pe/media/.renditions/wysiwyg/miray-parlantes_1.jpg"],
+["Adaptador WiFi USB 1200Mbps","$12.99","Alta velocidad, compatible con todos los sistemas","https://m.media-amazon.com/images/I/61vX0cKs9TL._AC_UF894,1000_QL80_.jpg"],
+["Lámpara LED Escritorio USB","$18.99","Luz regulable, puerto de carga, diseño moderno","https://m.media-amazon.com/images/I/71uW+X0yqBL._AC_SL1000_.jpg"],
+["Hub USB 3.0 4 Puertos","$14.99","Transferencia rápida, diseño compacto, plug and play","https://m.media-amazon.com/images/I/71hJ4z5R5xL._AC_SL1000_.jpg"],
+["Funda Protectora Universal","$9.99","Resistente a golpes, material suave, varios tamaños","https://m.media-amazon.com/images/I/71z7X5yFyDL._AC_SL1000_.jpg"],
+["Soporte Ajustable para Laptop","$21.99","Altura regulable, ventilado, plegable y portátil","https://m.media-amazon.com/images/I/71G5yF2R5yL._AC_SL1000_.jpg"],
+["Power Bank 30000mAh","$32.99","Carga ultra rápida, 3 salidas, gran capacidad","https://m.media-amazon.com/images/I/81X+0uJ5yBL._AC_SL1000_.jpg"],
+["Audífonos Gamer con Luz","$36.99","Sonido 7.1, micrófono flexible, cómodos","https://m.media-amazon.com/images/I/71R3k5yFyDL._AC_SL1000_.jpg"],
+["Mousepad Grande RGB","$16.99","Base antideslizante, luces LED, superficie suave","https://m.media-amazon.com/images/I/81yF2R3xL._AC_SL1000_.jpg"],
+["Memoria USB 64GB","$8.99","Velocidad alta, diseño metálico, resistente","https://m.media-amazon.com/images/I/61z7X5yFyDL._AC_SL1000_.jpg"],
+["Tarjeta Micro SD 128GB","$13.99","Clase 10, para celulares y cámaras, rápida","https://m.media-amazon.com/images/I/71yF2R3xL._AC_SL1000_.jpg"],
+["Cable USB-C Reforzado","$6.99","Carga y datos, 2 metros, muy resistente","https://m.media-amazon.com/images/I/71uW+X0yqBL._AC_SL1000_.jpg"],
+["Cable Lightning Certificado","$7.99","Para iPhone, 1.5m, durable y seguro","https://m.media-amazon.com/images/I/81G5yF2R5yL._AC_SL1000_.jpg"],
+["Cable HDMI 4K 2 metros","$9.99","Alta definición, compatible con todo dispositivo","https://m.media-amazon.com/images/I/71hJ4z5R5xL._AC_SL1000_.jpg"],
+["Visor Realidad Virtual Básico","$29.99","Compatible con celulares, lentes ajustables, cómodo","https://m.media-amazon.com/images/I/71X4ZQZqzNL._AC_SL1000_.jpg"],
+["Visor Realidad Virtual Avanzado","$44.99","Con botones integrados, soporte para lentes, mayor visión","https://m.media-amazon.com/images/I/61d2uW3y5yL._AC_SL1000_.jpg"],
+["Visor VR con Control Remoto","$54.99","Incluye mando para juegos, visión 360°, correas ajustables","https://m.media-amazon.com/images/I/71Y3Z8xQzPL._AC_SL1000_.jpg"],
+["Visor VR Profesional Audio Integrado","$69.99","Sonido envolvente, lentes ópticos de alta definición, ligero","https://m.media-amazon.com/images/I/81a7R4yKzQL._AC_SL1000_.jpg"],
+["Control Inalámbrico Universal","$28.99","Para PC, TV y consolas, batería recargable","https://m.media-amazon.com/images/I/61y0K8aKzFL._AC_SL1000_.jpg"],
+["Base de Refrigeración Laptop","$19.99","Ventiladores potentes, silenciosa, regulable","https://m.media-amazon.com/images/I/71z7X5yFyDL._AC_SL1000_.jpg"],
+["Reloj Inteligente Sport","$45.99","Resistente al agua 5ATM, pasos, calorías, llamadas","https://m.media-amazon.com/images/I/81kfA-GtWwL._AC_SL1500_.jpg"],
+["Cargador Rápido 65W","$22.99","Carga súper rápida para celulares y laptops, compacto","https://m.media-amazon.com/images/I/71+5ZpR3xAL._AC_SL1500_.jpg"],
+["Auriculares Inalámbricos Pro","$49.99","Cancelación de ruido, sonido HiFi, estuche carga","https://m.media-amazon.com/images/I/61SUj2aKoEL._AC_SL1500_.jpg"],
+["Mouse Gamer 7 Botones","$18.99","DPI ajustable, luces RGB, agarre cómodo","https://m.media-amazon.com/images/I/71d2uW3y5yL._AC_SL1500_.jpg"],
+["Teclado de Oficina Silencioso","$19.99","Teclas suaves, diseño delgado, conexión USB","https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg"],
+["Cámara de Seguridad WiFi","$35.99","Visión nocturna, detección movimiento, audio bidireccional","https://m.media-amazon.com/images/I/71y2ZpR3xAL._AC_SL1500_.jpg"],
+["Parlante Extra Bajos","$32.99","Graves profundos, batería 15 horas, resistente agua","https://m.media-amazon.com/images/I/81uW+X0yqBL._AC_SL1500_.jpg"],
+["Extensor de Red WiFi","$17.99","Amplía señal a toda la casa, instalación fácil","https://m.media-amazon.com/images/I/61Z5KfFz5qL._AC_SL1500_.jpg"],
+["Lámpara Proyector Galaxia","$24.99","Luces de estrellas, control remoto, para habitación","https://m.media-amazon.com/images/I/71R3k5yFyDL._AC_SL1500_.jpg"],
+["Hub USB-C 7 en 1","$26.99","HDMI, USB 3.0, Lector SD, carga, todo en uno","https://m.media-amazon.com/images/I/81yF2R3xL._AC_SL1500_.jpg"],
+["Funda Teclado iPad","$29.99","Protección completa, teclado desmontable, soporte","https://m.media-amazon.com/images/I/61z7X5yFyDL._AC_SL1500_.jpg"],
+["Soporte para Celular Auto","$12.99","Ajustable, sujeción segura, fácil instalación","https://m.media-amazon.com/images/I/71yF2R3xL._AC_SL1500_.jpg"],
+["Batería Externa Solar","$36.99","Carga por sol, ideal viajes, resistente golpes","https://m.media-amazon.com/images/I/71uW+X0yqBL._AC_SL1500_.jpg"],
+["Audífonos Deportivos","$25.99","Gancho oreja, resistente sudor, sonido claro","https://m.media-amazon.com/images/I/81G5yF2R5yL._AC_SL1500_.jpg"],
+["Mousepad Pequeño Antideslizante","$7.99","Superficie lisa, base de goma, lavable","https://m.media-amazon.com/images/I/71hJ4z5R5xL._AC_SL1500_.jpg"],
+["Memoria USB 128GB","$12.99","Almacenamiento seguro, alta velocidad lectura","https://m.media-amazon.com/images/I/61y0K8aKzFL._AC_SL1500_.jpg"],
+["Tarjeta Micro SD 256GB","$19.99","Alta capacidad, grabación 4K, rendimiento estable","https://m.media-amazon.com/images/I/71z7X5yFyDL._AC_SL1500_.jpg"],
+["Cable USB-C a Lightning","$10.99","Carga y datos certificado, 2 metros largo","https://m.media-amazon.com/images/I/71kfA-GtWwL._AC_SL1500_.jpg"],
+["Cable VGA a HDMI","$14.99","Conecta equipos antiguos a pantallas modernas","https://m.media-amazon.com/images/I/71+5ZpR3xAL._AC_SL1500_.jpg"],
+["Cable Audio 3.5mm 3m","$6.99","Sonido sin interferencias, conecta celulares parlantes","https://m.media-amazon.com/images/I/61SUj2aKoEL._AC_SL1500_.jpg"],
+["Control para Celular","$23.99","Soporte incluido, para juegos móviles, ergonómico","https://m.media-amazon.com/images/I/71d2uW3y5yL._AC_SL1500_.jpg"],
+["Base Carga Inalámbrica","$18.99","Carga rápida, compatible con todos los modelos","https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg"],
+["Reloj Inteligente Niños","$29.99","Juegos, cámara, llamadas, resistente al agua","https://m.media-amazon.com/images/I/71y2ZpR3xAL._AC_SL1500_.jpg"],
+["Cargador Solar Portátil","$42.99","Paneles eficientes, para emergencias y camping","https://m.media-amazon.com/images/I/81uW+X0yqBL._AC_SL1500_.jpg"],
+["Audífonos Diadema Livianos","$17.99","Cómodos para estudio, micrófono incluido, cable largo","https://m.media-amazon.com/images/I/61Z5KfFz5qL._AC_SL1500_.jpg"],
+["Mouse Inalámbrico Recargable","$21.99","No usa pilas, batería duradera, silencioso","https://m.media-amazon.com/images/I/71R3k5yFyDL._AC_SL1500_.jpg"],
+["Teclado Numerico USB","$11.99","Pequeño, portátil, ideal contabilidad y oficina","https://m.media-amazon.com/images/I/81yF2R3xL._AC_SL1500_.jpg"],
+["Cámara Exterior Resistente","$42.99","Impermeable, visión nocturna color, alarma","https://m.media-amazon.com/images/I/61z7X5yFyDL._AC_SL1500_.jpg"],
+["Parlante Mini Portátil","$14.99","Sonido potente, tamaño bolsillo, correa incluida","https://m.media-amazon.com/images/I/71yF2R3xL._AC_SL1500_.jpg"],
+["Adaptador Bluetooth Audio","$13.99","Convierte parlantes antiguos en inalámbricos","https://m.media-amazon.com/images/I/71uW+X0yqBL._AC_SL1500_.jpg"],
+["Lámpara Mesa Recargable","$21.99","Táctil, niveles luz, batería larga duración","https://m.media-amazon.com/images/I/81G5yF2R5yL._AC_SL1500_.jpg"],
+["Lector Tarjetas 4 Ranuras","$9.99","Lectura rápida, compatible SD/MicroSD/M2/CF","https://m.media-amazon.com/images/I/71hJ4z5R5xL._AC_SL1500_.jpg"],
+["Funda Resistente Golpes","$14.99","Protección militar, bordes reforzados, para celular","https://m.media-amazon.com/images/I/61y0K8aKzFL._AC_SL1500_.jpg"],
+["Soporte Pared TV Universal","$19.99","Firme, ajustable, para pantallas 14 a 42 pulgadas","https://m.media-amazon.com/images/I/71z7X5yFyDL._AC_SL1500_.jpg"],
+["Batería Externa Delgada","$25.99","Cabe en bolsillo, carga 2 dispositivos a la vez","https://m.media-amazon.com/images/I/71kfA-GtWwL._AC_SL1500_.jpg"],
+["Audífonos Con Cable Reforzado","$12.99","Diseño clásico, sonido nítido, difíciles de romper","https://m.media-amazon.com/images/I/71+5ZpR3xAL._AC_SL1500_.jpg"],
+["Kit Limpieza Pantallas","$8.99","Líquido + paño + cepillo, seguro para todos dispositivos","https://m.media-amazon.com/images/I/61SUj2aKoEL._AC_SL1500_.jpg"],
+["Memoria USB 256GB","$18.99","Gran capacidad, diseño metálico elegante","https://m.media-amazon.com/images/I/71d2uW3y5yL._AC_SL1500_.jpg"],
+["Tarjeta Micro SD 512GB","$29.99","Ideal cámaras seguridad y almacenamiento masivo","https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg"],
+["Cable Extensor USB 3 metros","$8.99","Alarga conexión sin perder velocidad datos","https://m.media-amazon.com/images/I/71y2ZpR3xAL._AC_SL1500_.jpg"],
+["Cable Red CAT6 10 metros","$11.99","Internet estable y rápido, conexión segura","https://m.media-amazon.com/images/I/81uW+X0yqBL._AC_SL1500_.jpg"],
+["Control Multimedia PC","$15.99","Controla música y videos desde escritorio","https://m.media-amazon.com/images/I/61Z5KfFz5qL._AC_SL1500_.jpg"],
+["Base Enfriadora Celular","$14.99","Ventilador potente, ideal juegos prolongados","https://m.media-amazon.com/images/I/71R3k5yFyDL._AC_SL1500_.jpg"],
+["Reloj Inteligente Llamadas Bluetooth","$52.99","Hablar por reloj, agenda, notificaciones completas","https://m.media-amazon.com/images/I/81yF2R3xL._AC_SL1500_.jpg"],
+["Cargador Auto 4 Puertos","$13.99","Carga 4 celulares a la vez, voltaje estable","https://m.media-amazon.com/images/I/61z7X5yFyDL._AC_SL1500_.jpg"],
+["Auriculares Abiertos Deportivos","$39.99","Oído libre, seguros corriendo, sonido envolvente","https://m.media-amazon.com/images/I/71yF2R3xL._AC_SL1500_.jpg"],
+["Mouse Ergonómico Vertical","$22.99","Cuida tu muñeca, evita dolores, alta precisión","https://m.media-amazon.com/images/I/71uW+X0yqBL._AC_SL1500_.jpg"],
+["Teclado Compacto 60%","$29.99","Ahorra espacio, ideal gamers y oficina","https://m.media-amazon.com/images/I/81G5yF2R5yL._AC_SL1500_.jpg"],
+["Cámara 360 Grados","$54.99","Vista completa, para casa o negocio, audio","https://m.media-amazon.com/images/I/71hJ4z5R5xL._AC_SL1500_.jpg"],
+["Parlante Torre Bluetooth","$47.99","Luces LED, gran potencia, batería larga duración","https://m.media-amazon.com/images/I/61y0K8aKzFL._AC_SL1500_.jpg"],
+["Repetidor de Señal WiFi 5G","$24.99","Doble banda, más velocidad, menor interferencia","https://m.media-amazon.com/images/I/71z7X5yFyDL._AC_SL1500_.jpg"],
+["Lámpara Solar Exterior","$16.99","Se carga de día, prende sola noche, sensor movimiento","https://m.media-amazon.com/images/I/71kfA-GtWwL._AC_SL1500_.jpg"],
+["Docking Station USB-C","$59.99","Expande puertos, carga, video, red, todo profesional","https://m.media-amazon.com/images/I/71+5ZpR3xAL._AC_SL1500_.jpg"],
+["Funda Impermeable Playa","$9.99","Protege celular de agua, arena y polvo","https://m.media-amazon.com/images/I/61SUj2aKoEL._AC_SL1500_.jpg"],
+["Soporte Brazo Monitor","$34.99","Ahorra espacio, ajustable altura y ángulo","https://m.media-amazon.com/images/I/71d2uW3y5yL._AC_SL1500_.jpg"],
+["Power Bank Magnético","$32.99","Se pega al celular, carga sin cables, delgado","https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg"],
+["Audífonos Conducción Ósea","$46.99","Seguridad vial, escucha todo alrededor, deporte","https://m.media-amazon.com/images/I/71y2ZpR3xAL._AC_SL1500_.jpg"],
+["Alfombrilla Escritorio Grande","$17.99","Espacio para teclado y mouse, suave y resistente","https://m.media-amazon.com/images/I/81uW+X0yqBL._AC_SL1500_.jpg"],
+["Llavero Localizador Bluetooth","$12.99","Encuentra llaves o bolso desde el celular","https://m.media-amazon.com/images/I/61Z5KfFz5qL._AC_SL1500_.jpg"],
+["Memoria USB 1TB","$34.99","Capacidad enorme, guarda todo lo que necesites","https://m.media-amazon.com/images/I/71R3k5yFyDL._AC_SL1500_.jpg"],
+["Kit Adaptadores Viaje","$15.99","Funciona en todos países, seguro y compacto","https://m.media-amazon.com/images/I/81yF2R3xL._AC_SL1500_.jpg"],
+["Cable Carga Magnético 3 en 1","$11.99","Para todos dispositivos, conexión segura","https://m.media-amazon.com/images/I/61z7X5yFyDL._AC_SL1500_.jpg"],
+["Cable Red Plano 15 metros","$13.99","Fácil ocultar, alta velocidad, calidad profesional","https://m.media-amazon.com/images/I/71yF2R3xL._AC_SL1500_.jpg"],
+["Control Presentaciones Inalámbrico","$14.99","Láser incluido, alcance largo, batería duradera","https://m.media-amazon.com/images/I/71uW+X0yqBL._AC_SL1500_.jpg"],
+["Base Carga 4 en 1","$27.99","Carga reloj, audífonos, celular y pluma a la vez","https://m.media-amazon.com/images/I/81G5yF2R5yL._AC_SL1500_.jpg"],
+["Termómetro Infrarrojo Digital","$19.99","Sin contacto, lectura rápida, pantalla grande","https://m.media-amazon.com/images/I/71hJ4z5R5xL._AC_SL1500_.jpg"],
+["Cargador Energía Solar Portátil","$49.99","Ideal excursiones, batería grande, resistente agua","https://m.media-amazon.com/images/I/71z7X5yFyDL._AC_SL1500_.jpg"],
+["Audífonos Intraurales Ligeros","$14.99","Cable plano, resistente enredos, sonido equilibrado","https://m.media-amazon.com/images/I/71kfA-GtWwL._AC_SL1500_.jpg"],
+["Mouse Óptico Básico USB","$9.99","Fácil uso, compatible con todo, económico y duradero","https://m.media-amazon.com/images/I/71+5ZpR3xAL._AC_SL1500_.jpg"],
+["Teclado Multimedia Estándar","$16.99","Teclas función, diseño ergonómico, conexión segura","https://m.media-amazon.com/images/I/61SUj2aKoEL._AC_SL1500_.jpg"],
+["Cámara de Vigilancia 4MP","$48.99","Alta resolución, grabación continua, acceso remoto","https://m.media-amazon.com/images/I/71d2uW3y5yL._AC_SL1500_.jpg"],
+["Parlante Sonido Envolvente","$39.99","Graves profundos, luces rítmicas, entrada auxiliar","https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg"],
+["Amplificador de Señal 2.4GHz","$21.99","Mejora cobertura, instalación en 2 minutos","https://m.media-amazon.com/images/I/71y2ZpR3xAL._AC_SL1500_.jpg"],
+["Lámpara LED Recargable Emergencia","$13.99","Prende automático sin luz, alta duración batería","https://m.media-amazon.com/images/I/81uW+X0yqBL._AC_SL1500_.jpg"],
+["Hub USB 2.0 Alargador","$10.99","4 puertos, cable 1.5m, diseño práctico","https://m.media-amazon.com/images/I/61Z5KfFz5qL._AC_SL1500_.jpg"],
+["Funda Antigolpes Reforzada","$16.99","Esquinas protegidas, diseño delgado, varios modelos","https://m.media-amazon.com/images/I/71R3k5yFyDL._AC_SL1500_.jpg"],
+["Soporte Mesa Ajustable Celular","$11.99","Ángulo libre, estable, ideal ver videos o estudiar","https://m.media-amazon.com/images/I/81yF2R3xL._AC_SL1500_.jpg"]
+];
+
+const container = document.getElementById("products");
+
+productData.forEach(p => {
+container.innerHTML += `
+<div class="card" onclick="openModal('${p[0]}','${p[1]}','${p[2]}','${p[3]}')">
+
+<img src="${p[3]}">
+
+<div class="info">
+<h3>${p[0]}</h3>
+<p class="price">${p[1]}</p>
+</div>
+
+<div class="desc-hover">${p[2]}</div>
+
+</div>
+`;
+});
+
+</script>
+
+</body>
+</html>
